@@ -1,21 +1,5 @@
-import { player, ship_image, bullet_image } from './start';
+import { player, ship_image, bullet_image, rect } from './start';
 import { playerBullets } from './game';
-
-function drawPlayer(ctx) {
-    if(player.state == "dead") return;
-    
-    if(player.state == "hit") {
-        // ctx.fillStyle = "yellow";
-        // ctx.fillRect(player.x,player.y, player.width, player.height);
-        drawPlayerExplosion(ctx);
-      return;
-  }
-
-  ctx.drawImage(ship_image,
-  25,1, 23,23, // исходные координаты
-  player.x, player.y, player.width, player.height // конечные координаты
-  );
-}
 
 var particles = [];
 
@@ -61,4 +45,4 @@ function drawPlayerBullets(ctx) {
   }
 }
 
-export { drawPlayer, drawPlayerBullets };
+export { drawPlayerBullets, drawPlayerExplosion };

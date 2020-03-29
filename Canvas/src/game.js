@@ -4,6 +4,10 @@ import { enemies } from './enemies';
 var playerBullets = [];
 
 function updateGame() {
+    if(game.state == "choose") {
+    	game.state = "start";
+    	overlay.counter = 0;
+    }
     if(game.state == "playing" && enemies.length == 0) {
         game.state = "won";
         overlay.title = "SWARM DEAD";
@@ -24,6 +28,7 @@ function updateGame() {
     if(overlay.counter >= 0) {
         overlay.counter++;
     }
+
     
 }
 function updatePlayer() {
@@ -108,7 +113,4 @@ function attachEvent(node,name,func) {
     }
 };
 
-function updateBackground() {
-}
-
-export { updateGame, updatePlayer, updatePlayerBullets, updateBackground, doSetup, attachEvent, playerBullets, firePlayerBullet };
+export { updateGame, updatePlayer, updatePlayerBullets, doSetup, attachEvent, playerBullets, firePlayerBullet };

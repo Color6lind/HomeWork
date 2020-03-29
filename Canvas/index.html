@@ -6,10 +6,38 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<img src="img/пришелец.png" id="alien__img" class="hide">
 	<div class="screen__center" id="screen">
+		<div id="bg_second"></div>
 		<div id="main__screen">
-			<button id="btn__start">Start</button>
+			<h1 id="header">Space Invaders</h1>
+			<div id="instruction">
+				<ul id="description">
+					<li>Choose a space ship</li>
+					<li>Left and right arrow control, <span>space</span> bar shooting</li>
+					<li>Shoot at the aliens and do not collide with bombs</li>
+					<li>Keep track of the number of lives</li>
+				</ul>
+			</div>
+
+			<!-- Button -->
+			<a class="glitch-btn" href="#" target="_blank" id="btn__start">
+  				<div class="text">START<span class="hidden">&nbsp></span></div>
+  				<div class="mask mask1">
+    				<span>START</span>
+  				</div>
+  				<div class="mask mask2">
+    				<span>START</span>
+ 				</div>
+  				<div class="mask mask3">
+    				<span>START</span>
+  				</div>
+ 			</a>
 		</div>
+	</div>
+
+	<div class="screen_center" id="ship">
+		
 	</div>
 
 	<canvas id="canvas" width="600" height="400" class="hide"></canvas>
