@@ -15,6 +15,7 @@ $('.glitch-btn').on('click', (e) => {
   setTimeout(() => {
     $('#canvas').slideDown();
     $('#alien__img').slideDown();
+    $('#heart__pos').slideDown();
   }, 100);
 
 let sprite = function(x, y, pos, w, h) {
@@ -118,13 +119,14 @@ function startGame() {
   window.requestAnimationFrame(mainLoop);
 }
 
+
+
 function drawPlayer(ctx) {
     if(player.state == "dead") return;
     
     if(player.state == "hit") {
-        // ctx.fillStyle = "yellow";
-        // ctx.fillRect(player.x,player.y, player.width, player.height);
-        drawPlayerExplosion(ctx);
+
+      drawPlayerExplosion(ctx);
       return;
   }
 
@@ -172,6 +174,7 @@ var player = {
   height: 50,
   counter: 0,
   character: 1,
+  heart: 3,
 };
 
 player.height = 46;
@@ -183,13 +186,13 @@ loadResources();
 
 function loadResources() {
   ship_image = new Image();
-  ship_image.src = "../img/hunter1.png";
+  ship_image.src = "../Canvas/img/hunter1.png";
 
   bomb_image = new Image();
-  bomb_image.src = "../img/bomb.png";
+  bomb_image.src = "../Canvas/img/bomb.png";
  
   bullet_image = new Image();
-  bullet_image.src = "../img/bullets.png";
+  bullet_image.src = "../Canvas/img/bullets.png";
 }
 
 

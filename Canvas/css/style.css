@@ -31,6 +31,24 @@ canvas {
 	width: 600px;
 }
 
+img[name="heart"] {
+	height: 5vh;
+	display: inherit;
+}
+
+#heart__pos {
+	position: absolute;
+	top: 50%;
+	right: 5%;
+	transform: translate(-5%, -50%);
+	z-index: 3;
+
+	text-indent: 30px;
+	border: 10px ridge #ff4f00;
+	padding: 5px;
+	background: #000;
+}
+
 .hide {
 	display: none;
 }
