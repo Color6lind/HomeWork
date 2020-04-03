@@ -12,7 +12,7 @@
 }
 
 body {
-	background: url(../img/bg_space.jpg) no-repeat center top / cover;
+	background: url(Canvas/img/bg_space.jpg) no-repeat center top / cover;
 	background-attachment: fixed;
 	color: white;
 	font-family: "Share Tech Mono";
