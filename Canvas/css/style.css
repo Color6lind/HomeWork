@@ -12,8 +12,10 @@
 }
 
 body {
-	background: url(img/bg_space.jpg) no-repeat center top / cover;
+	background: url(../img/bg_space.jpg) no-repeat center top / cover;
 	background-attachment: fixed;
+	-webkit-background-size: 100%;
+	background-size: 100%;
 	color: white;
 	font-family: "Share Tech Mono";
 	overflow:  hidden;
