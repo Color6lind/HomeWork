@@ -1,7 +1,11 @@
-import { game, overlay, keyboard, player, cvs } from './start';
+import $ from 'jquery';
+import { game, overlay, keyboard, player, cvs, parseTime, time } from './start';
 import { enemies } from './enemies';
 
 var playerBullets = [];
+var heart = 3;
+var node = document.getElementById('heart__pos')
+var img_heart = document.querySelectorAll('#heart__pos img');
 
 function updateGame() {
     if(game.state == "choose") {
@@ -10,27 +14,52 @@ function updateGame() {
     }
     if(game.state == "playing" && enemies.length == 0) {
         game.state = "won";
-        overlay.title = "SWARM DEAD";
+        overlay.title = " DEAD";
         overlay.subtitle = "press space to play again";
         overlay.counter = 0;
     }
     if(game.state == "over" && keyboard[32]) {
-        game.state = "start";
+    	game.state = "start";
         player.state = "alive";
         overlay.counter = -1;
+        
+        switch (heart) {
+        	case 3:
+        		node.removeChild(img_heart[2]);
+        		heart = 2;
+        		break;
+        	case 2:
+        		node.removeChild(img_heart[1]);
+        		heart = 1;
+        		break;
+        	case 1:
+        		node.parentNode.removeChild(node);
+        		heart = 0;
+        		break;
+        }
     }
+    if (game.state == "end" && keyboard[32]) {
+    	end__menu();
+    }
+
     if(game.state == "won" && keyboard[32]) {
-        game.state = "start";
-        player.state = "alive";
-        overlay.counter = -1;
+        end__menu();
     }
     
     if(overlay.counter >= 0) {
         overlay.counter++;
     }
-
-    
 }
+
+function end__menu() {
+	let last__time = time;
+	$('#canvas').slideUp();
+	$('.timer').slideUp();
+	$('#alien__img').slideUp();
+	$('#screen__over').slideDown();
+	document.getElementById('finaly__time').innerHTML = parseTime(last__time);
+}
+
 function updatePlayer() {
     if(player.state == "dead") return;
     
@@ -61,7 +90,13 @@ function updatePlayer() {
 	    if(player.counter >= 40) {
 	        player.counter = 0;
 	        player.state = "dead";
-	        game.state = "over";
+	        if (heart == 1) {
+	        	node.parentNode.removeChild(node);
+	        	game.state = "end";
+	        	return false
+	        } else {
+	        	game.state = "over";
+	        }
 	        overlay.title = "GAME OVER";
 	        overlay.subtitle = "press space to play again";
 	        overlay.counter = 0;
@@ -96,6 +131,7 @@ function updatePlayerBullets() {
 	});
 }
 
+
 function doSetup() {
 	attachEvent(document, "keydown", function(e) {
 		keyboard[e.keyCode] = true;
@@ -104,6 +140,8 @@ function doSetup() {
 		keyboard[e.keyCode] = false;
 	});
 }
+
+
 
 function attachEvent(node,name,func) {
     if(node.addEventListener) {

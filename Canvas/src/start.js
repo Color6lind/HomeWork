@@ -9,13 +9,19 @@ import { firePlayerBullet, drawPlayerBullets, drawPlayerExplosion } from './play
 var cvs = document.getElementById("canvas");
 var ctx = cvs.getContext('2d');
 
-$('.glitch-btn').on('click', (e) => {
+$('#btn__try').on('click', (e) => {
+  e.preventDefault();
+  window.location.reload();
+});
+
+$('#btn__start').on('click', (e) => {
   e.preventDefault();
   $('#screen').slideUp();
   setTimeout(() => {
     $('#canvas').slideDown();
     $('#alien__img').slideDown();
     $('#heart__pos').slideDown();
+    $('.timer').slideDown();
   }, 100);
 
 let sprite = function(x, y, pos, w, h) {
@@ -50,10 +56,6 @@ Choose.prototype = {
   }
 };
 
-let rect = [];
-let i = 0;
-let ship_num = 0;
-
 for (; i<3; i++) {
   rect.push(new Choose(i * 180 + 100, 300, ship_num, 23, 23));
   ship_num = ship_num + 25.2;
@@ -86,7 +88,9 @@ setInterval(function() {
       player.character = 2;
       rect[i].select();
       clearInterval();
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
       startGame();
+      timerStartStop();
       // console.log(222)
     }
     if(rect[i].selected && rect[i].pos == 0 ) {
@@ -94,6 +98,7 @@ setInterval(function() {
       rect[i].select();
       clearInterval();
       startGame();
+      timerStartStop();
       // console.log(111)
     }
     if(rect[i].selected && rect[i].pos == 50.4 ) {
@@ -101,6 +106,7 @@ setInterval(function() {
       rect[i].select();
       clearInterval();
       startGame();
+      timerStartStop();
       // console.log(333)
     }
 
@@ -119,15 +125,15 @@ function startGame() {
   window.requestAnimationFrame(mainLoop);
 }
 
-
-
 function drawPlayer(ctx) {
-    if(player.state == "dead") return;
+  if(player.state == "dead") {
+    return
+  };
     
-    if(player.state == "hit") {
+  if(player.state == "hit") {
 
-      drawPlayerExplosion(ctx);
-      return;
+    drawPlayerExplosion(ctx);
+    return;
   }
 
   if(player.character == 1) {
@@ -153,9 +159,14 @@ function drawPlayer(ctx) {
 
 }
 
+
 var ship_image;
 var bomb_image;
 var bullet_image;
+
+let rect = [];
+let i = 0;
+let ship_num = 0;
 
 var game = {
     state: "start",
@@ -195,30 +206,65 @@ function loadResources() {
   bullet_image.src = "../Canvas/img/bullets.png";
 }
 
+let pause = false;
 
+window.addEventListener('keydown',function(e){
+    if(e.keyCode == 27){
+      pause = !pause;
+    }
+});
 
 function mainLoop() {
   var ctx = cvs.getContext('2d');
 
-  updateGame();
-  updateEnemies();
-  updatePlayer();
+  if(!pause) {
+    updateGame();
+    updateEnemies();
+    updatePlayer();
+    
+    updatePlayerBullets();
+    updateEnemyBullets();
   
-  updatePlayerBullets();
-  updateEnemyBullets();
-
-  checkCollisions();
+    checkCollisions();
+    
+    drawBackground(ctx);
+    drawEnemies(ctx);
+    drawPlayer(ctx);
+    drawEnemyBullets(ctx);
+    drawPlayerBullets(ctx);
+    drawOverlay(ctx);
   
-  drawBackground(ctx);
-  drawEnemies(ctx);
-  drawPlayer(ctx);
-  drawEnemyBullets(ctx);
-  drawPlayerBullets(ctx);
-  drawOverlay(ctx);
+    doSetup();
 
-  doSetup();
+  } 
+
+  rect = [];
 
   requestAnimationFrame(mainLoop);  
 }
 
-export { game, overlay, player, keyboard, ctx, cvs, ship_image, bomb_image, bullet_image };
+let time = 0;
+document.getElementsByClassName('timer_start')[0].innerHTML = parseTime(time);
+if (game.state == "over" && keyboard[32]) {
+  time = 0;
+};
+
+// Перевод в mm:ss
+function parseTime(time) {
+  let minutes = Math.floor(time / 60);
+  let seconds = time - (minutes * 60);
+
+  if (minutes < 10) minutes = '0' + minutes;
+  if (seconds < 10) seconds = '0' + seconds;
+  return minutes + ':' + seconds;
+}
+
+// Таймер
+function timerStartStop() {setInterval(() => {
+  if (pause || game.state == "over" || game.state == "won" || game.state == "end") return;
+    time += 1;
+    document.getElementsByClassName('timer_start')[0].innerHTML = parseTime(time);
+  }, 1000);
+}
+
+export { game, overlay, player, keyboard, ctx, cvs, ship_image, bomb_image, bullet_image, parseTime, time };

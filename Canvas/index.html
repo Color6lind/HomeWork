@@ -9,19 +9,21 @@
 	<img src="img/пришелец.png" id="alien__img" class="hide">
 	<div class="screen__center" id="screen">
 		
-		<div id="bg_second"></div>
+		<div class="bg_second"></div>
 		
-		<div id="main__screen">
+		<div class="main__screen">
 
-			<h1 id="header">Space Invaders</h1>
+			<h1 class="header">Space Invaders</h1>
 
 			<!-- Instruction -->
-			<div id="instruction">
-				<ul id="description">
+			<div class="instruction">
+				<ul class="description">
 					<li>Choose a space ship</li>
-					<li>Left and right arrow control, <span>space</span> bar shooting</li>
+					<li><span class="bl">Left</span> and <span class="bl">right</span> arrow control, <span class="bl">space</span> bar shooting</li>
+					<li><span class="bl">ESC</span> is a pause</li>
 					<li>Shoot at the aliens and do not collide with bombs</li>
 					<li>Keep track of the number of lives</li>
+					
 				</ul>
 			</div>
 
@@ -42,9 +44,40 @@
 		</div>
 	</div>
 
-	<div class="screen_center" id="ship">
+	<div class="screen__center hide" id="screen__over">
 		
+		<div class="bg_second"></div>
+		
+		<div class="main__screen">
+
+			<h1 class="header">Game Over!!!</h1>
+
+			<!-- Instruction -->
+			<div class="instruction">
+				<ul class="description">
+					<li>Game time: <span class="bl" id="finaly__time">0</span></li>
+					<li>Try again</li>					
+				</ul>
+			</div>
+
+			<!-- Button -->
+			<a class="glitch-btn" href="#" target="_blank" id="btn__try">
+  				<div class="text">TRY AGAIN<span class="hidden">&nbsp></span></div>
+  				<div class="mask mask1">
+    				<span>TRY AGAIN</span>
+  				</div>
+  				<div class="mask mask2">
+    				<span>TRY AGAIN</span>
+ 				</div>
+  				<div class="mask mask3">
+    				<span>TRY AGAIN</span>
+  				</div>
+ 			</a>
+
+		</div>
 	</div>
+
+	<div class="timer hide">Timer: <span class="timer_start">0</span></div>
 
 	<div id="heart__pos" class="hide">
 		<img src="../Canvas/img/heart.png"name="heart">
