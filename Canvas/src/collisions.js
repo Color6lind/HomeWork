@@ -16,9 +16,19 @@ function checkCollisions() {
     }
     
     if(player.state == "hit" || player.state == "dead") return;
+
     for(var i in enemyBullets) {
         var bullet = enemyBullets[i];
         if(collided(bullet,player)) {
+            bullet.state = "hit";
+            player.state = "hit";
+            player.counter = 0;
+        }
+    }
+
+    for(var i in playerBullets) {
+        var bullet = playerBullets[i];
+        if(collided(bullet,bullet)) {
             bullet.state = "hit";
             player.state = "hit";
             player.counter = 0;
