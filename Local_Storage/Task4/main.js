@@ -23,6 +23,8 @@ prev.addEventListener('click', ()=> {
 });
 
 area.onfocus = function() {
+	let end = localStorage.getItem("item", arr);
+	ler = end.split(',')
 	arr[i] = ler[i]
 	area.value = arr[i]
 }
@@ -38,10 +40,4 @@ next.addEventListener('click', ()=> {
 		} 
 	} 
 });
-
-window.onload  = function() {
-	let end = localStorage.getItem("item", arr);
-	ler = end.split(',')
-	area.value = ler[i];
-}
 
