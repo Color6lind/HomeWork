@@ -10,11 +10,6 @@ let form = {
 	text: ""
 }
 
-window.addEventListener('onbeforeunload', function() {
-	
-	
-});
-
 name.addEventListener('blur', ()=> {
 	form.name = name.value;
 	localStorage.setItem("ObjectForm", JSON.stringify(form))
