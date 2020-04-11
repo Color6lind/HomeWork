@@ -2,10 +2,13 @@
 let app1 = new Vue({
 	el: '#app1',
 	data: {
-
+		text: '',
+		items: [],
 	},
-	mathods: {
-
+	methods: {
+		getArr: function() {
+			this.items = this.text.split(' ');
+		},
 	},
 });
 
@@ -13,9 +16,9 @@ let app1 = new Vue({
 let app2 = new Vue({
 	el: '#app2',
 	data: {
-
+		arr: []
 	},
-	mathods: {
+	methods: {
 
 	},
 });
@@ -24,9 +27,9 @@ let app2 = new Vue({
 let app3 = new Vue({
 	el: '#app3',
 	data: {
-
+		type: '',
 	},
-	mathods: {
+	methods: {
 
 	},
 });
@@ -35,9 +38,10 @@ let app3 = new Vue({
 let app4 = new Vue({
 	el: '#app4',
 	data: {
-
+		selected: 'HTML',
+		options: ['HTML', 'JS', 'PHP', 'SQL'],
 	},
-	mathods: {
+	methods: {
 
 	},
 });

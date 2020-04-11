@@ -6,7 +6,19 @@
 </head>
 <body>
 	
+	<div id="app">
+		<p v-bind:class="objColor">Абзац</p>
+	</div>
 
+	<style>
+		.valid {
+			background: blue;
+		}
+		.error {
+			background: green;
+		}
+	</style>
+	
 	<script src="vue.js"></script>
 	<script src="script.js"></script>
 </body>
