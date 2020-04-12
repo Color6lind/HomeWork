@@ -6,6 +6,24 @@
 </head>
 <body>
 	
+	<!-- Task 1 -->
+	<div id="app1">
+		<a href="" v-on:click.prevent="addText">Click me</a>
+		<p>Some text: {{ message }}</p>
+	</div>
+<hr>
+	<!-- Task 3 -->
+	<div id="app2">
+		<p v-once>{{ text }}</p>
+		<p >{{ text }}</p>
+		<button v-on:click="change">Click me</button>
+	</div>
+<hr>
+	<!-- Task 4 -->
+	<div id="app3">
+		<p>Немного текста: <span v-html="msg"></span></p>
+		<button v-on:click="addMsg">Click me</button>
+	</div>
 
 	<script src="vue.js"></script>
 	<script src="script.js"></script>

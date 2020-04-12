@@ -5,7 +5,13 @@
 	<title>Document</title>
 </head>
 <body>
-	
+
+	<div id="app">
+		<a href="" v-on:click.prevent.keyCode.left="addTextLeft"
+				   v-on:click.prevent.keyCode.right="addTextRight"
+				   v-on:click.prevent.keyCode.middle="addTextMiddle">Click me</a>
+		<p>{{ text }}</p>
+	</div>
 
 	<script src="vue.js"></script>
 	<script src="script.js"></script>
