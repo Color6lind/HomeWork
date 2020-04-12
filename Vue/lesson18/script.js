@@ -1,4 +1,4 @@
-
+// Task 3
 let app = new Vue({
 	el: '#app',
 	data: {
