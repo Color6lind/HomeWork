@@ -4,42 +4,11 @@ let ctx = cvs.getContext('2d');
 
 let grass = new Image();
 let sky = new Image();
-grass.src = 'grass.jpg'
-sky.src = 'sky.jpg'
+grass.src = './grass.jpg'
+sky.src = './sky.jpg'
 
-class Game {
+class DrawObject{
 	constructor() {
-		this.lastTime = 0;
-	}
-
-	render() {
-		this.bg();
-		this.drawPlayerStay();
-		this.eatMax();
-	}
-
-	update(time) {
-		this.render();
-		if(this.lastTime == 0) {
-            this.lastTime = time;
-            return;
-        }
-        this.lastTime = time;
-    }
-
-	frame(time) {
-		this.update(time);
-        requestAnimationFrame(time => this.frame(time /1000));
-    }
-
-    run() {
-        requestAnimationFrame(time => this.frame(time / 1000));
-    }
-}
-
-class DrawObject extends Game {
-	constructor() {
-		super();
 		this.size = 20;
 		this.sizeEye = 4;
 		this.mouth = 10;
@@ -156,8 +125,38 @@ class Size extends CheckKick {
 	}
 }
 
+class Game extends Size {
+	constructor() {
+		super();
+		this.lastTime = 0;
+	}
 
-let game = new Size();
+	render() {
+		this.bg();
+		this.drawPlayerStay();
+		this.eatMax();
+	}
+
+	update(time) {
+		this.render();
+		if(this.lastTime == 0) {
+            this.lastTime = time;
+            return;
+        }
+        this.lastTime = time;
+    }
+
+	frame(time) {
+		this.update(time);
+        requestAnimationFrame(time => this.frame(time /1000));
+    }
+
+    run() {
+        requestAnimationFrame(time => this.frame(time / 1000));
+    }
+}
+
+let game = new Game();
 game.run();
 
 let btn1 = document.getElementById('btn1')
