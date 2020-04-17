@@ -4,7 +4,7 @@ let ctx = cvs.getContext('2d');
 
 let grass = new Image();
 let sky = new Image();
-grass.src = './pixel-art-game-sprite-8-bit.jpg'
+grass.src = './grass.png'
 sky.src = './sky.jpg'
 
 class Game {
