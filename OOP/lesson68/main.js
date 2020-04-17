@@ -4,8 +4,8 @@ let ctx = cvs.getContext('2d');
 
 let grass = new Image();
 let sky = new Image();
-grass.src = './grass.png'
-sky.src = './sky.jpg'
+grass.src = 'grass.png'
+sky.src = 'sky.jpg'
 
 class Game {
 	constructor() {
@@ -54,9 +54,9 @@ class DrawObject extends Game {
 	}
 
 	textFull() {
-		ctx.fillStyle = "white";
-        ctx.font = "Bold 20pt Arial";
-        ctx.fillText("I'am full", 100,350);
+		ctx.fillStyle = "black";
+        ctx.font = "Bold 26pt Arial";
+        ctx.fillText("I'am full", 85,350);
 	}
 
 	drawPlayerStay() {
