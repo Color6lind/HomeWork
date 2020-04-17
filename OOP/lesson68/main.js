@@ -2,32 +2,58 @@
 let cvs = document.getElementById('canvas')
 let ctx = cvs.getContext('2d');
 
-let pika = new Image();
 let grass = new Image();
 let sky = new Image();
 grass.src = './pixel-art-game-sprite-8-bit.jpg'
 sky.src = './sky.jpg'
-pika.src = './pika_img.png';
 
-class DrawObject {
+class Game {
 	constructor() {
 		this.lastTime = 0;
-		this.curTime = 0;
+	}
+
+	render() {
+		this.bg();
+		this.drawPlayerStay();
+		this.eatMax();
+	}
+
+	update(time) {
+		this.render();
+		if(this.lastTime == 0) {
+            this.lastTime = time;
+            return;
+        }
+        this.lastTime = time;
+    }
+
+	frame(time) {
+		this.update(time);
+        requestAnimationFrame(time => this.frame(time /1000));
+    }
+
+    run() {
+        requestAnimationFrame(time => this.frame(time / 1000));
+    }
+}
+
+class DrawObject extends Game {
+	constructor() {
+		super();
 		this.size = 20;
 		this.sizeEye = 4;
 		this.mouth = 10;
-		this.isPressed = false;
 	}
 
 	bg() {
   		ctx.drawImage(sky,0,0, 300, 220);
   		ctx.drawImage(grass,0,210);
   		if(this.size > 75) {
-			this.full();
+			this.textFull();
 		}
 	}
 
-	full() {
+	textFull() {
 		ctx.fillStyle = "white";
         ctx.font = "Bold 20pt Arial";
         ctx.fillText("I'am full", 100,350);
@@ -55,56 +81,46 @@ class DrawObject {
     	ctx.arc(155,192,this.sizeEye,0,Math.PI*2,true);  // Правый глаз
 		ctx.fill();
     	ctx.closePath();
-	}
+	}	
 
-	clickBtn2() {
-		if(this.isPressed) {
-			this._sadness()
-		} else {
-			this._smile()
-		}
-
-		if(this.lastTime > this.curTime + 0.8) {
-			this.isPressed = false;
-		}
-	}
-
-	_smile() {
+	smile() {
 		ctx.moveTo(150,200);
     	ctx.fillStyle = "black";
     	ctx.arc(150, 200,this.mouth,0,Math.PI,false);  // рот (по часовой стрелке)
     	ctx.fill();
 	}
 
-	_sadness() {
+	sadness() {
 		ctx.moveTo(150,210);
     	ctx.fillStyle = "black";
     	ctx.arc(150, 210,this.mouth,0,Math.PI,true);  // рот (по часовой стрелке)
     	ctx.fill();
 	}
 
-	update(time) {
-		this.bg();
-		this.drawPlayerStay();
-		this.eatMax();
-		if(this.lastTime == 0) {
-            this.lastTime = time;
-            return;
-        }
-        this.lastTime = time;
-    }
-
-	frame(time) {
-		this.update(time);
-        requestAnimationFrame(time => this.frame(time /1000));
-    }
-
-    run() {
-        requestAnimationFrame(time => this.frame(time / 1000));
-    }
+	
 }
 
-class Size extends DrawObject {
+class CheckKick extends DrawObject{
+	constructor() {
+		super();
+		this.curTime = 0;
+		this.isPressed = false;
+	}
+
+	clickBtn2() {
+		if(this.isPressed) {
+			this.sadness()
+		} else {
+			this.smile()
+		}
+
+		if(this.lastTime > this.curTime + 0.8) {
+			this.isPressed = false;
+		}
+	}
+}
+
+class Size extends CheckKick {
 	constructor() {
 		super();
 	}
@@ -143,7 +159,6 @@ class Size extends DrawObject {
 
 let game = new Size();
 game.run();
-
 
 let btn1 = document.getElementById('btn1')
 let btn2 = document.getElementById('btn2')
