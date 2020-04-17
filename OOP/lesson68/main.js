@@ -4,8 +4,8 @@ let ctx = cvs.getContext('2d');
 
 let grass = new Image();
 let sky = new Image();
-grass.src = 'grass.png'
-sky.src = 'sky.jpg'
+grass.src = './grass.png'
+sky.src = './sky.jpg'
 
 class Game {
 	constructor() {
