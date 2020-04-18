@@ -28,11 +28,7 @@ class Rectangle {
 	}
 }
 
-let rect = new Rectangle();
-rect.setWidth(300);
-rect.setHeight(200);
+let rect = new Rectangle(300, 200);
 console.log('Ширина: '+rect.getWidth()+' '+'Высота: '+rect.getHeight())
-let rect2 = new Rectangle();
-rect2.setWidth(200);
-rect2.setHeight(100);
+let rect2 = new Rectangle(200, 100);
 console.log('Ширина: '+rect2.getWidth()+' '+'Высота: '+rect2.getHeight())
