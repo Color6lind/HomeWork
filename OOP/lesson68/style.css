@@ -8,12 +8,23 @@ body {
 	background: #2DC5D1FF;
 }
 
-#canvas {
+#block_canvas {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	
+}
+
+#canvas {
 	border: 3px solid red;
+}
+
+#hp {
+	font-size: 30px;
+	font-weight: bold;
+	color: red;
+	text-align: center;
 }
 
 button {
@@ -24,14 +35,7 @@ button {
 	color: red;
 	font-weight: bold;
 	font-size: 16px;
-}
-
-#btn1 {
-
-}
-
-#btn2 {
-	
+	border: 1px solid red;
 }
 
 #block_btn {

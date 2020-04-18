@@ -2,6 +2,8 @@
 let cvs = document.getElementById('canvas')
 let ctx = cvs.getContext('2d');
 
+let hp = document.getElementById('hp');
+
 let grass = new Image();
 let sky = new Image();
 grass.src = './grass.jpg';
@@ -16,6 +18,7 @@ class DrawObject{
 		this.posArcX = 150;
 		this.posEyeL = 145;
 		this.posEyeR = 155;
+		this.playerHP = 100;
 	}
 
 	bg() {
@@ -85,6 +88,8 @@ class DrawObject{
             return;
         }
         this.lastTime = time;
+
+        hp.innerHTML = this.playerHP;
     }
 
 	frame(time) {
@@ -105,6 +110,7 @@ class CheckKick extends DrawObject{
 	}
 
 	clickBtn2() {
+
 		if(this.isPressed) {
 			this.sadness()
 		} else {
@@ -114,6 +120,7 @@ class CheckKick extends DrawObject{
 		if(this.lastTime > this.curTime + 0.8) {
 			this.isPressed = false;
 		}
+
 	}
 }
 
@@ -142,7 +149,12 @@ class Size extends CheckKick {
 		while (this._checkSize(this.size)) {
 			this.size += 8;
 			break;
-		} 
+		}
+		if(this.playerHP <= 99) {
+			this.playerHP = this.playerHP + 1;
+		} else {
+			return false
+		}
 	}
 
 	eatMax() {
@@ -200,9 +212,13 @@ class Position extends Size {
 let game = new Position();
 game.run();
 
-let btn1 = document.getElementById('btn1')
-let btn2 = document.getElementById('btn2')
-let btn3 = document.getElementById('btn3')
+let btn1 = document.getElementById('btn1');
+let btn2 = document.getElementById('btn2');
+let btn3 = document.getElementById('btn3');
+
+setInterval(()=> {
+	game.playerHP = game.playerHP - 2;
+}, 1000);
 
 btn1.onclick = function() {
 	game.eating();
@@ -212,6 +228,7 @@ btn2.onclick = function() {
 	game.isPressed = true;
 	game.curTime = game.lastTime;
 	game.clickBtn2();
+	game.playerHP = game.playerHP - 1;
 }
 
 btn3.onclick = function() {
