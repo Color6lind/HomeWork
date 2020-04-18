@@ -13,6 +13,9 @@ class DrawObject{
 		this.size = 20;
 		this.sizeEye = 4;
 		this.mouth = 10;
+		this.posArcX = 150;
+		this.posEyeL = 145;
+		this.posEyeR = 155;
 	}
 
 	bg() {
@@ -32,7 +35,7 @@ class DrawObject{
 	drawPlayerStay() {
 		ctx.beginPath();
 		ctx.fillStyle = "red";
-    	ctx.arc(150,200,this.size,0,Math.PI*2,true); // Внешняя окружность
+    	ctx.arc(this.posArcX,200,this.size,0,Math.PI*2,true); // Внешняя окружность
     	ctx.fill();
     	ctx.stroke();
     	ctx.closePath()
@@ -40,30 +43,30 @@ class DrawObject{
     	this.clickBtn2();
     	ctx.closePath();
     	ctx.beginPath();
-    	ctx.moveTo(145,192);
+    	ctx.moveTo(this.posEyeL,192);
     	ctx.fillStyle = "black";
-    	ctx.arc(145,192,this.sizeEye,0,Math.PI*2,true);  // Левый глаз
+    	ctx.arc(this.posEyeL,192,this.sizeEye,0,Math.PI*2,true);
     	ctx.fill();
     	ctx.closePath();
     	ctx.beginPath();
 		ctx.fillStyle = "black";
-    	ctx.moveTo(155,192);
-    	ctx.arc(155,192,this.sizeEye,0,Math.PI*2,true);  // Правый глаз
+    	ctx.moveTo(this.posEyeR,192);
+    	ctx.arc(this.posEyeR,192,this.sizeEye,0,Math.PI*2,true);
 		ctx.fill();
     	ctx.closePath();
 	}	
 
 	smile() {
-		ctx.moveTo(150,200);
+		ctx.moveTo(this.posArcX,200);
     	ctx.fillStyle = "black";
-    	ctx.arc(150, 200,this.mouth,0,Math.PI,false);  // рот (по часовой стрелке)
+    	ctx.arc(this.posArcX, 200,this.mouth,0,Math.PI,false);
     	ctx.fill();
 	}
 
 	sadness() {
-		ctx.moveTo(150,210);
+		ctx.moveTo(this.posArcX,210);
     	ctx.fillStyle = "black";
-    	ctx.arc(150, 210,this.mouth,0,Math.PI,true);  // рот (по часовой стрелке)
+    	ctx.arc(this.posArcX, 210,this.mouth,0,Math.PI,true);
     	ctx.fill();
 	}
 
@@ -71,6 +74,8 @@ class DrawObject{
 		this.bg();
 		this.drawPlayerStay();
 		this.eatMax();
+		this.move();
+		this.moveBack();
 	}
 
 	update(time) {
@@ -117,16 +122,16 @@ class Size extends CheckKick {
 		super();
 	}
 
-	_checkSize() {
-		if (this.size <= 85 && this.size >= 20) {
+	_checkSize(size) {
+		if (size <= 85 && size >= 20) {
 			return true
 		} else {
 			return false
 		}
 	}
 
-	_checkMaxSize() {
-		if (this.size > 21 && this.size < 95) {
+	_checkMaxSize(size) {
+		if (size > 21 && size < 95) {
 			return true
 		} else {
 			return false
@@ -134,26 +139,70 @@ class Size extends CheckKick {
 	}
 
 	eating() {
-		while (this._checkSize()) {
+		while (this._checkSize(this.size)) {
 			this.size += 8;
 			break;
 		} 
 	}
 
 	eatMax() {
-		while (this._checkMaxSize()) {
+		while (this._checkMaxSize(this.size)) {
 			this.size -= 0.12;
 			break;
 		}
 	}
 }
 
+class Position extends Size {
+	constructor() {
+		super();
+		this.moveRight = false
+		this.moveLeft = false
+	}
 
-let game = new Size();
+	_checkPosX(posArcX) {
+		if(Math.abs(posArcX) <= 330 && this.moveRight == true) {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	_checkBackPosX(posArcX) {
+		if(posArcX != 150 ) {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	move() {
+		if(this._checkPosX(this.posArcX)) {
+			this.posArcX += 1;
+			this.posEyeL += 1;
+			this.posEyeR += 1;
+		}
+	}
+
+	moveBack() {
+		if (this._checkBackPosX(this.posArcX) && this.moveLeft == true) {
+			this.posArcX -= 1;
+			this.posEyeL -= 1;
+			this.posEyeR -= 1;
+		}
+		if (this.posArcX == 150) {
+			btn3.disabled = false;
+		}
+	}
+}
+
+
+let game = new Position();
 game.run();
 
 let btn1 = document.getElementById('btn1')
 let btn2 = document.getElementById('btn2')
+let btn3 = document.getElementById('btn3')
 
 btn1.onclick = function() {
 	game.eating();
@@ -163,4 +212,18 @@ btn2.onclick = function() {
 	game.isPressed = true;
 	game.curTime = game.lastTime;
 	game.clickBtn2();
+}
+
+btn3.onclick = function() {
+	game.moveRight = true;
+	game.moveLeft = false;
+	
+	setTimeout(() => {
+		game.moveRight = !game.moveRight;
+		game.moveLeft = !game.moveLeft;
+	}, 4000);
+
+	if(game.moveLeft == true || game.moveRight == true) {
+		btn3.disabled = true;
+	} 
 }

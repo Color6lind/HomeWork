@@ -17,7 +17,8 @@ body {
 }
 
 button {
-	position: absolute;
+	display: block;
+	margin: 20px;
 	line-height: 24px;
 	width: 120px;
 	color: red;
@@ -26,13 +27,16 @@ button {
 }
 
 #btn1 {
-	top: 45%;
-	left: 10%;
-	transform: translate(-10%, -45%);
+
 }
 
 #btn2 {
-	top: 55%;
-	left: 10%;
-	transform: translate(-10%, -55%);
+	
+}
+
+#block_btn {
+	position: absolute;
+	top: 50%;
+	left: 20%;
+	transform: translate(-20%, -50%);
 }
