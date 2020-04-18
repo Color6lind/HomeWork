@@ -268,7 +268,7 @@ let tul = setInterval(()=> {
 let et = setInterval(()=> {
 	game.wantE = true;
 	game.cheakWant();
-}, 5000);
+}, 10000);
 game.wantE = false;
 
 btn1.onclick = function() {
