@@ -3,6 +3,10 @@ let cvs = document.getElementById('canvas')
 let ctx = cvs.getContext('2d');
 
 let hp = document.getElementById('hp');
+let end = document.getElementById('end');
+let allBtn = document.querySelectorAll('button');
+let allB = document.querySelector('button');
+let ArrStr = ['Я хочу есть!!', 'Я хочу в туалет!', 'Я хочу мыться']
 
 let grass = new Image();
 let sky = new Image();
@@ -18,7 +22,7 @@ class DrawObject{
 		this.posArcX = 150;
 		this.posEyeL = 145;
 		this.posEyeR = 155;
-		this.playerHP = 100;
+		this.playerHP = 50;
 	}
 
 	bg() {
@@ -73,12 +77,26 @@ class DrawObject{
     	ctx.fill();
 	}
 
+	endGame() {
+		if(this.playerHP == 0) {
+			clearInterval(tul);
+			clearInterval(et);
+			end.innerHTML = "Ваш питомец умер!"
+			btn1.disabled = true
+			btn2.disabled = true
+			btn3.disabled = true
+			ctx.fillStyle = "black";
+        	ctx.fillRect(0, 0, 300,400);
+		}
+	}
+
 	render() {
 		this.bg();
 		this.drawPlayerStay();
 		this.eatMax();
 		this.move();
 		this.moveBack();
+		this.endGame();
 	}
 
 	update(time) {
@@ -150,7 +168,7 @@ class Size extends CheckKick {
 			this.size += 8;
 			break;
 		}
-		if(this.playerHP <= 99) {
+		if(this.playerHP <= 49) {
 			this.playerHP = this.playerHP + 1;
 		} else {
 			return false
@@ -208,8 +226,29 @@ class Position extends Size {
 	}
 }
 
+class Output extends Position{
+	constructor() {
+		super();
+		this.wantE = false;
+	}
 
-let game = new Position();
+	cheakWant() {
+		if(this.size <= 23 && this.wantE == true) {
+			this.wantEat();
+		}
+	}
+
+	wantEat() {
+		alert(ArrStr[0]);
+	}
+
+	wantTaulet() {
+		alert(ArrStr[1]);
+	}
+}
+
+
+let game = new Output();
 game.run();
 
 let btn1 = document.getElementById('btn1');
@@ -217,8 +256,20 @@ let btn2 = document.getElementById('btn2');
 let btn3 = document.getElementById('btn3');
 
 setInterval(()=> {
-	game.playerHP = game.playerHP - 2;
+	if(game.playerHP > 0) {
+		game.playerHP = game.playerHP - 1;
+	}
 }, 1000);
+
+let tul = setInterval(()=> {
+	game.wantTaulet();
+}, 20000);
+
+let et = setInterval(()=> {
+	game.wantE = true;
+	game.cheakWant();
+}, 5000);
+game.wantE = false;
 
 btn1.onclick = function() {
 	game.eating();
@@ -228,7 +279,9 @@ btn2.onclick = function() {
 	game.isPressed = true;
 	game.curTime = game.lastTime;
 	game.clickBtn2();
-	game.playerHP = game.playerHP - 1;
+	if(game.playerHP > 0) {
+		game.playerHP = game.playerHP - 1;
+	}
 }
 
 btn3.onclick = function() {
@@ -244,3 +297,4 @@ btn3.onclick = function() {
 		btn3.disabled = true;
 	} 
 }
+

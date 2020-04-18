@@ -20,12 +20,13 @@ body {
 	border: 3px solid red;
 }
 
-#hp {
+#hp, #end {
 	font-size: 30px;
 	font-weight: bold;
 	color: red;
 	text-align: center;
 }
+
 
 button {
 	display: block;
