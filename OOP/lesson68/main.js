@@ -263,7 +263,7 @@ setInterval(()=> {
 
 let tul = setInterval(()=> {
 	game.wantTaulet();
-}, 20000);
+}, 25000);
 
 let et = setInterval(()=> {
 	game.wantE = true;
