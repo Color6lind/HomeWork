@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+
+Redirect 301 /index.php /test.php
