@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+
+RedirectMatch /test([0-9]+).php /index.php
