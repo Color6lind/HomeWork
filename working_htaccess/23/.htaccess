@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} \.html$
+RewriteCond %{REQUEST_URI} ^/content/
+RewriteRule .+ index.php
