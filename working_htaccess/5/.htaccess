@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^dir1/([^/]+)/ index1.php?get=$1
+RewriteRule ^dir2/([^/]+)/ index2.php?get=$1
