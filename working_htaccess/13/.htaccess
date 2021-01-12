@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+
+RedirectMatch /(.+)?(dir)(.+)? /index.php
